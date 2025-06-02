@@ -19,8 +19,14 @@ public class OCI {
 
     public void setDataInicio(LocalDate data) {
         this.dataInicio = data;
+        // os pazos de Ocncologia sao menores, essa linha calcula automaticamente. Para oncologia = 30, para os demais = 60
         int dias = tipo.equalsIgnoreCase("Oncologia") ? 30 : 60;
+        // adiciona os dias (30 ou 60) a partir da data atual (dataInicio)
         this.dataLimite = data.plusDays(dias);
+    }
+
+    public String getDescricao() {
+        return descricao;
     }
 
     public void mostrarDados() {

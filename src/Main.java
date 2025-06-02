@@ -84,12 +84,18 @@ public class Main {
         // OCI para teste
         OCI oci = new OCI("09.01.01.001-4", "Avaliação Geral", "Geral",
                          List.of("Consulta", "Exame básico"));
-        
+
+        OCI oci1 = new OCI("09.01.01.001-4", "Avaliação Geral", "Geral",
+                List.of("Consulta", "Exame básico"));
+        OCI oci2 = new OCI("09.01.01.001-4", "Avaliação Geral", "Geral",
+                List.of("Consulta", "Exame básico"));
+
+
         System.out.print("Data de início (AAAA-MM-DD): ");
         String dataInicioStr = scanner.nextLine();
         LocalDate dataInicio = TratadorExcecoes.validarData(dataInicioStr);
         oci.setDataInicio(LocalDate.parse(dataInicioStr));
-        
+
         sistema.cadastrarPaciente(nome, cpf, telefone, agente, ubs, telefoneUBS, oci);
         System.out.println("Paciente cadastrado com sucesso!");
     }

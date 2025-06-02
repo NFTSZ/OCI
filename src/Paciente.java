@@ -1,6 +1,4 @@
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Paciente {
     // id para a identificacao do paciente, simplifica a pesquisa
@@ -39,6 +37,26 @@ public class Paciente {
 
     public OCI getOci() {
         return oci;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public String getAgenteSaude() {
+        return agenteSaude;
+    }
+
+    public String getNomeUBS() {
+        return nomeUBS;
+    }
+
+    public String getTelefoneUBS() {
+        return telefoneUBS;
+    }
+
+    public String getCpf() {
+        return cpf;
     }
 
     // mostra os dados completos do paciente

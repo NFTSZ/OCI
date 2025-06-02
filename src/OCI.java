@@ -29,6 +29,28 @@ public class OCI {
         return descricao;
     }
 
+    public String getCodigo() {
+        return codigo;
+    }
+    public String getTipo() {
+        return tipo;
+    }
+    public LocalDate getDataInicio() {
+        return dataInicio;
+    }
+    public LocalDate getDataLimite() {
+        return dataLimite;
+    }
+    public List<String> getProcedimentos() {
+        return procedimentos;
+    }
+    public String getStatus() {
+        if (LocalDate.now().isAfter(dataLimite)) {
+            return "Atrasado";
+        }
+        return "Em andamento";
+    }
+
     public void mostrarDados() {
         System.out.println("\n--- Dados da OCI ---");
         System.out.println("Código: " + codigo);

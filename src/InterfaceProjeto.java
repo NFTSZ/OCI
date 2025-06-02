@@ -72,6 +72,16 @@ public class InterfaceProjeto extends JFrame implements ActionListener {
         } else if (e.getSource() == listaDePacientes) {
             cardLayout.show(painelPrincipal, "ListaDePacientes");
         }
+
+
+    }
+
+    public CardLayout getCardLayout() {
+        return cardLayout;
+    }
+
+    public JPanel getPainelPrincipal() {
+        return painelPrincipal;
     }
 
     public static void main(String[] args) {

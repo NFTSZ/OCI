@@ -18,7 +18,7 @@ public class InterfaceProjeto extends JFrame implements ActionListener {
         sistema = new SistemaOCI();
         criarExemplosTeste(); // Adiciona alguns dados de exemplo
 
-        setSize(1000, 500);
+        setSize(1000, 700);
         setTitle("MONITORA+");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
@@ -66,22 +66,22 @@ public class InterfaceProjeto extends JFrame implements ActionListener {
         telaInicial.setBackground(new Color(226, 226, 226));
 
         JLabel titulo = new JLabel("OFERTA DE CUIDADOS INTEGRADOS", SwingConstants.CENTER);
-        titulo.setFont(new Font("SansSerif", Font.BOLD, 18));
-        titulo.setBounds(100, 20, 800, 30);
+        titulo.setFont(new Font("SansSerif", Font.BOLD, 25));
+        titulo.setBounds(120, 80, 800, 30);
         telaInicial.add(titulo);
 
         JLabel subtitulo = new JLabel("MONITORA+", SwingConstants.CENTER);
-        subtitulo.setFont(new Font("SansSerif", Font.BOLD, 36));
-        subtitulo.setBounds(100, 60, 800, 50);
+        subtitulo.setFont(new Font("SansSerif", Font.BOLD, 42));
+        subtitulo.setBounds(100, 140, 800, 50);
         telaInicial.add(subtitulo);
 
         // Botao de Listar Pacientes e suas acoes
-        JButton listaDePacientes = criarBotao("Lista de Pacientes", 180);
+        JButton listaDePacientes = criarBotao("Lista de Pacientes", 250);
         listaDePacientes.addActionListener(this);
         telaInicial.add(listaDePacientes);
 
         // Botao de Registrar Nova OCI e suas acoes
-        JButton registrarNovaOCI = criarBotao("Registrar Nova OCI", 250);
+        JButton registrarNovaOCI = criarBotao("Registrar Nova OCI", 350);
         registrarNovaOCI.addActionListener(e -> JOptionPane.showMessageDialog(null, "Em breve!", "Informação", JOptionPane.INFORMATION_MESSAGE
         ));
         telaInicial.add(registrarNovaOCI);
@@ -98,17 +98,20 @@ public class InterfaceProjeto extends JFrame implements ActionListener {
 
         // Painel de botões
         JPanel painelBotoes = new JPanel(new GridLayout(5, 1, 5, 5));
-        painelBotoes.setPreferredSize(new Dimension(200,80));
+        painelBotoes.setPreferredSize(new Dimension(200,60));
         panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         JButton btnCadastrar = criarBotaoLista("Cadastrar Paciente");
         btnCadastrar.addActionListener(e -> cardLayout.show(painelPrincipal, "CadastroPaciente"));
+        //btnCadastrar.setBackground(new Color(245, 205, 51));
 
         JButton btnAtualizar = criarBotaoLista("Atualizar Processo");
         btnAtualizar.addActionListener(this);
+        //btnAtualizar.setBackground(new Color(245, 205, 51));
 
         JButton btnDetalhes = criarBotaoLista("Detalhes do Paciente");
         btnDetalhes.addActionListener(e -> mostrarDetalhesPaciente());
+        //btnDetalhes.setBackground(new Color(245, 205, 51));
 
         painelBotoes.add(btnCadastrar);
         painelBotoes.add(btnAtualizar);
@@ -119,6 +122,7 @@ public class InterfaceProjeto extends JFrame implements ActionListener {
 
         JButton btnVoltar = criarBotaoLista("Voltar");
         btnVoltar.addActionListener(e -> cardLayout.show(painelPrincipal, "TelaInicial"));
+        //btnVoltar.setBackground(new Color(245, 205, 51));
 
         painelBotoes.add(btnVoltar);
 
@@ -213,7 +217,7 @@ public class InterfaceProjeto extends JFrame implements ActionListener {
 
         JTextArea detalhesArea = new JTextArea();
         detalhesArea.setEditable(false);
-        detalhesArea.setFont(new Font("Monospaced", Font.PLAIN, 12));
+        detalhesArea.setFont(new Font("Monospaced", Font.PLAIN, 20));
 
         JButton btnVoltar = new JButton("Voltar");
         btnVoltar.addActionListener(e -> cardLayout.show(painelPrincipal, "ListaDePacientes"));
@@ -228,8 +232,8 @@ public class InterfaceProjeto extends JFrame implements ActionListener {
     private JButton criarBotao(String texto, int y) {
         JButton btn = new JButton(texto);
         // Posicao dos botoes da tela inicial
-        btn.setBounds(380, y, 230, 50);
-        btn.setFont(new Font("Arial", Font.PLAIN, 18));
+        btn.setBounds(380, y, 230, 70);
+        btn.setFont(new Font("Arial", Font.PLAIN, 20));
         btn.setBackground(new Color(245, 205, 51));
         btn.setFocusPainted(false);
         btn.setBorderPainted(false);
@@ -238,7 +242,7 @@ public class InterfaceProjeto extends JFrame implements ActionListener {
 
     private JButton criarBotaoLista(String texto) {
         JButton btn = new JButton(texto);
-        btn.setFont(new Font("Arial", Font.PLAIN, 14));
+        btn.setFont(new Font("Arial", Font.PLAIN, 15));
         return btn;
     }
 

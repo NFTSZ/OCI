@@ -54,6 +54,8 @@ public class Main {
         }
     }
 
+    // polimorfismo de sobreposicao, apesar da classe nao ter heranca direta
+    // essa classe simplifica o metodo da classe original (SistemaOCI)
     private static void cadastrarPaciente(SistemaOCI sistema, Scanner scanner) {
         try {
             System.out.println("\nNovo Cadastro");

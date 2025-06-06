@@ -25,10 +25,4 @@ public class TratadorExcecoes {
             throw new IllegalArgumentException("Data inválida. Use o formato AAAA-MM-DD.");
         }
     }
-
-    public static void validarIndice(int indice, int tamanho) {
-        if (indice < 1 || indice > tamanho) {
-            throw new IllegalArgumentException("Índice inválido. Deve estar entre 1 e " + tamanho + ".");
-        }
-    }
 }

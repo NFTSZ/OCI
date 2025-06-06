@@ -17,6 +17,10 @@ public class OCI {
         this.procedimentos = new ArrayList<>(procedimentos);
     }
 
+    public OCI() {
+
+    }
+
     public void setDataInicio(LocalDate data) {
         this.dataInicio = data;
         // os pazos de Ocncologia sao menores, essa linha calcula automaticamente. Para oncologia = 30, para os demais = 60

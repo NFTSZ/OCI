@@ -17,18 +17,18 @@ public class TratadorExcecoes {
         }
     }
 
+
+    //Pedaço do codigo refatorado.
     public static LocalDate validarData(String dataStr) {
+        if (dataStr == null || dataStr.trim().isEmpty()) {
+            throw new IllegalArgumentException("Data não pode ser vazia ou nula.");
+        }
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             return LocalDate.parse(dataStr, formatter);
         } catch (DateTimeParseException e) {
-            throw new IllegalArgumentException("Data inválida. Use o formato AAAA-MM-DD.");
-        }
-    }
-
-    public static void validarIndice(int indice, int tamanho) {
-        if (indice < 1 || indice > tamanho) {
-            throw new IllegalArgumentException("Índice inválido. Deve estar entre 1 e " + tamanho + ".");
+            throw new IllegalArgumentException("Data inválida. Use o formato AAAA-MM-DD (ex: 2023-12-31).");
         }
     }
 }

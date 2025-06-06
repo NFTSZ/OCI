@@ -51,10 +51,6 @@ public class Paciente {
         return nomeUBS;
     }
 
-    public String getTelefoneUBS() {
-        return telefoneUBS;
-    }
-
     public String getCpf() {
         return cpf;
     }

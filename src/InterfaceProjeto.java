@@ -55,10 +55,8 @@ public class InterfaceProjeto extends JFrame implements ActionListener {
         OCI oci2 = new OCI("09.02.01.002-6", "Cardiologia", "Cardiologia", List.of("EKG", "Consulta"));
         oci2.setDataInicio(LocalDate.now().minusDays(5));
 
-        sistema.cadastrarPaciente("João Silva", "123.456.789-00", "(83) 99999-9999",
-                "Maria Souza", "UBS Centro","(83) 98888-8888", oci1);
-        sistema.cadastrarPaciente("Ana Oliveira", "987.654.321-00", "(83) 98888-8888",
-                "Carlos Andrade", "UBS Liberdade", "(83) 99999-9999",  oci2);
+        sistema.cadastrarPaciente("João Silva", "123.456.789-00", "(83) 99999-9999", "Maria Souza", "UBS Centro","(83) 98888-8888", oci1);
+        sistema.cadastrarPaciente("Ana Oliveira", "987.654.321-00", "(83) 98888-8888", "Carlos Andrade", "UBS Liberdade", "(83) 99999-9999",  oci2);
     }
 
     private JPanel criarTelaInicial() {
@@ -82,8 +80,7 @@ public class InterfaceProjeto extends JFrame implements ActionListener {
 
         // Botao de Registrar Nova OCI e suas acoes
         JButton registrarNovaOCI = criarBotao("Registrar Nova OCI", 350);
-        registrarNovaOCI.addActionListener(e -> JOptionPane.showMessageDialog(null, "Em breve!", "Informação", JOptionPane.INFORMATION_MESSAGE
-        ));
+        registrarNovaOCI.addActionListener(e -> JOptionPane.showMessageDialog(null, "Em breve!", "Informação", JOptionPane.INFORMATION_MESSAGE));
         telaInicial.add(registrarNovaOCI);
 
         return telaInicial;
@@ -176,14 +173,19 @@ public class InterfaceProjeto extends JFrame implements ActionListener {
         panel.add(new JLabel("Data Início (AAAA-MM-DD):"));
         panel.add(dataField);
 
-        JButton btnCadastrar = new JButton("Cadastrar");
-        btnCadastrar.addActionListener(e -> {
+        dataField.addActionListener(e -> {
             try {
+                // Validação da data ANTES de criar a OCI
+                LocalDate dataInicio = TratadorExcecoes.validarData(dataField.getText());
+
+                // Validação do CPF (exemplo)
+                TratadorExcecoes.validarCPF(cpfField.getText());
+
                 String tipo = (String) tipoOciCombo.getSelectedItem();
                 OCI oci = new OCI(gerarCodigoOCI(), "Consulta " + tipo, tipo, List.of("Consulta", "Exame básico"));
-                oci.setDataInicio(LocalDate.parse(dataField.getText()));
+                oci.setDataInicio(dataInicio); // Usa a data já validada
 
-
+                // Cadastra o paciente (validações internas já feitas)
                 sistema.cadastrarPaciente(
                         nomeField.getText(),
                         cpfField.getText(),
@@ -194,18 +196,24 @@ public class InterfaceProjeto extends JFrame implements ActionListener {
                         oci
                 );
 
+                // Atualiza a interface
                 atualizarTabelaPacientes();
                 cardLayout.show(painelPrincipal, "ListaDePacientes");
-                JOptionPane.showMessageDialog(this, "Paciente cadastrado com sucesso!");
+                JOptionPane.showMessageDialog(this, "Paciente cadastrado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+
+            } catch (IllegalArgumentException ex) {
+                // Erro específico de validação (data, CPF, etc.)
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Erro de Validação", JOptionPane.ERROR_MESSAGE);
             } catch (Exception ex) {
-                JOptionPane.showMessageDialog(this, "Erro: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                // Erro genérico (ex: banco de dados, etc.)
+                JOptionPane.showMessageDialog(this, "Erro inesperado: " + ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
             }
         });
 
         JButton btnCancelar = new JButton("Cancelar");
         btnCancelar.addActionListener(e -> cardLayout.show(painelPrincipal, "ListaDePacientes"));
 
-        panel.add(btnCadastrar);
+        panel.add(dataField);
         panel.add(btnCancelar);
 
         return panel;

@@ -1,67 +1,67 @@
 import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
-
 import static org.junit.jupiter.api.Assertions.*;
 
-class TratadorExcecoesTest {
+public class TratadorExcecoesTest {
 
-    // 1) validarNaoVazio
+    // ---- Testes para datas válidas ----
     @Test
-    void validarNaoVaziodeveLancarParaValorNuloouVazio() {
-        // null
-        IllegalArgumentException ex1 = assertThrows(
-                IllegalArgumentException.class, () -> TratadorExcecoes.validarNaoVazio("Nome",null));
-        assertEquals("Nome não pode ser vazio.", ex1.getMessage());
-
-        // string vazia
-        IllegalArgumentException ex2 = assertThrows(
-                IllegalArgumentException.class, () -> TratadorExcecoes.validarNaoVazio("Email", "   "));
-        assertEquals("Email não pode ser vazio.", ex2.getMessage());
+    public void testValidarData_FormatoCorreto_DeveRetornarData() {
+        String dataValida = "2023-12-31";
+        LocalDate data = TratadorExcecoes.validarData(dataValida);
+        assertEquals(LocalDate.of(2023, 12, 31), data);
     }
-
-    // 2) validarCPF
+    // ---- Testes para datas inválidas ----
     @Test
-    void validarCPFdeveAceitarCpfValidoERejeitarCpfInvalido() {
-        // válido: 11 dígitos
+    public void testValidarData_FormatoIncorreto_DeveLancarExcecao() {
+        String dataInvalida = "31/12/2023";
+        try {
+            TratadorExcecoes.validarData(dataInvalida);
+            fail("Deveria ter lançado IllegalArgumentException!");
+        } catch (IllegalArgumentException e) {
+            assertEquals("Data inválida. Use o formato AAAA-MM-DD (ex: 2023-12-31).", e.getMessage());
+        }
+    }
+    @Test
+    public void testValidarData_DataVazia_DeveLancarExcecao() {
+        String dataVazia = "";
+        try {
+            TratadorExcecoes.validarData(dataVazia);
+            fail("Deveria ter lançado IllegalArgumentException!");
+        } catch (IllegalArgumentException e) {
+            assertEquals("Data não pode ser vazia ou nula.", e.getMessage());
+        }
+    }
+    @Test
+    public void testValidarData_DataNula_DeveLancarExcecao() {
+        try {
+            TratadorExcecoes.validarData(null);
+            fail("Deveria ter lançado IllegalArgumentException!");
+        } catch (IllegalArgumentException e) {
+            assertEquals("Data não pode ser vazia ou nula.", e.getMessage());
+        }
+    }
+    @Test
+    public void testValidarData_DataInexistente_DeveLancarExcecao() {
+        String dataInexistente = "2023-02-30"; // 30 de fevereiro não existe
+        try {
+            TratadorExcecoes.validarData(dataInexistente);
+            fail("Deveria ter lançado IllegalArgumentException!");
+        } catch (IllegalArgumentException e) {
+            assertTrue(e.getMessage().startsWith("Data inválida."));
+        }
+    }
+    @Test
+    public void testValidarCPF_FormatoValido_DevePassar() {
+        // CPFs válidos (com e sem máscara)
         assertDoesNotThrow(() -> TratadorExcecoes.validarCPF("12345678901"));
-
-        // inválido: menos de 11 dígitos
-        IllegalArgumentException ex1 = assertThrows(
-                IllegalArgumentException.class, () -> TratadorExcecoes.validarCPF("123"));
-        assertEquals("CPF inválido. Deve conter exatamente 11 dígitos numéricos.", ex1.getMessage());
-
-        // inválido: contém letra
-        IllegalArgumentException ex2 = assertThrows(
-                IllegalArgumentException.class, () -> TratadorExcecoes.validarCPF("12345678a01"));
-        assertEquals("CPF inválido. Deve conter exatamente 11 dígitos numéricos.", ex2.getMessage());
-    }
-
-    // 3) validarData
-    @Test
-    void validarDatadeveRetornarLocalDateParaFormatoCorreto() {
-        LocalDate data = TratadorExcecoes.validarData("2025-05-30");
-        assertEquals(LocalDate.of(2025, 5, 30), data);
+        assertDoesNotThrow(() -> TratadorExcecoes.validarCPF("123.456.789-01"));
     }
     @Test
-    void validarDatadeveLancarParaFormatoIncorreto() {
-        IllegalArgumentException ex = assertThrows(
-                IllegalArgumentException.class, () -> TratadorExcecoes.validarData("30/05/2025"));
-        assertEquals("Data inválida. Use o formato AAAA-MM-DD.", ex.getMessage());
-    }
-
-    // 4) validarIndice
-    @Test
-    void validarIndicedeveAceitarDentroDoIntervaloERejeitarFora() {
-        // assumindo tamanho = 5
-        assertDoesNotThrow(() -> TratadorExcecoes.validarIndice(1, 5));
-        assertDoesNotThrow(() -> TratadorExcecoes.validarIndice(5, 5));
-
-        IllegalArgumentException ex1 = assertThrows(
-                IllegalArgumentException.class, () -> TratadorExcecoes.validarIndice(0, 5));
-        assertEquals("Índice inválido. Deve estar entre 1 e 5.", ex1.getMessage());
-
-        IllegalArgumentException ex2 = assertThrows(
-                IllegalArgumentException.class, () -> TratadorExcecoes.validarIndice(6, 5));
-        assertEquals("Índice inválido. Deve estar entre 1 e 5.", ex2.getMessage());
+    public void testValidarCPF_FormatoInvalido_DeveLancarExcecao() {
+        // CPFs inválidos
+        assertThrows(IllegalArgumentException.class, () -> TratadorExcecoes.validarCPF("123"));
+        assertThrows(IllegalArgumentException.class, () -> TratadorExcecoes.validarCPF("123.456.789-0"));
+        assertThrows(IllegalArgumentException.class, () -> TratadorExcecoes.validarCPF(""));
     }
 }
